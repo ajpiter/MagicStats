@@ -1,28 +1,10 @@
-#The code below creates an Excel file with the Orlando Magic Game Logs from 2009 to 2021
-#The source of the data is publically available from Basketbal Reference.com 
-
 version #R version 4.0.2 (2020-06-22)
 library(rvest) #version 0.3.6 
+library(hablar) #Used to convert data types
+library(dplyr)
 #session_info(pkgs = NULL, include_base = FALSE)
 
-##### Import Table 1, Game Log for Orlando Magic 2020-2021 #####
-BrOrl21GameLog <- "https://www.basketball-reference.com/teams/ORL/2021/gamelog/"
-read_html(BrOrl21GameLog)
-
-#After importing the html site, transform to data table
-url <- BrOrl21GameLog
-pageobj <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
-pageobj %>%  
-  html_nodes("table") %>% 
-  .[[1]] %>% #Here, we indicate that this is the table we want to extract.
-  html_table(fill=T) -> OrlGameLog21
-
-#Update Column labels 
-coltitle <- as.character(OrlGameLog21[1,]) # read the column names from row 1
-colnames(OrlGameLog21) <- coltitle # add the column names to x
-OrlGameLog21 <- OrlGameLog21[-1,] # remove the first row and the 1st column of the data
-
-##### Import Table 2, Game Log for Orlando Magic 2019-2020 #####
+##### Import Table, Game Log for Orlando Magic 2019-2020 #####
 BrOrl20GameLog <- "https://www.basketball-reference.com/teams/ORL/2020/gamelog/"
 read_html(BrOrl20GameLog)
 
@@ -42,7 +24,7 @@ OrlGameLog20 <- OrlGameLog20[-21:-22,] #remove non-game stats
 OrlGameLog20 <- OrlGameLog20[-41:-42,] #remove non-game stats 
 OrlGameLog20 <- OrlGameLog20[-61:-62,] #remove non-game stats 
 
-##### Import Table 3, Game Log for Orlando Magic 2018-2019 #####
+##### Import Table, Game Log for Orlando Magic 2018-2019 #####
 BrOrl19GameLog <- "https://www.basketball-reference.com/teams/ORL/2019/gamelog/"
 read_html(BrOrl19GameLog)
 
@@ -62,7 +44,7 @@ OrlGameLog19 <- OrlGameLog19[-21:-22,] #remove non-game stats
 OrlGameLog19 <- OrlGameLog19[-41:-42,] #remove non-game stats 
 OrlGameLog19 <- OrlGameLog19[-61:-62,] #remove non-game stats 
 
-##### Import Table 4, Game Log for Orlando Magic 2017-2018 #####
+##### Import Table, Game Log for Orlando Magic 2017-2018 #####
 BrOrl18GameLog <- "https://www.basketball-reference.com/teams/ORL/2018/gamelog/"
 read_html(BrOrl18GameLog)
 
@@ -82,7 +64,7 @@ OrlGameLog18 <- OrlGameLog18[-21:-22,] #remove non-game stats
 OrlGameLog18 <- OrlGameLog18[-41:-42,] #remove non-game stats 
 OrlGameLog18 <- OrlGameLog18[-61:-62,] #remove non-game stats 
 
-##### Import Table 5, Game Log for Orlando Magic 2016-2017 #####
+##### Import Table, Game Log for Orlando Magic 2016-2017 #####
 BrOrl17GameLog <- "https://www.basketball-reference.com/teams/ORL/2017/gamelog/"
 read_html(BrOrl17GameLog)
 
@@ -102,7 +84,7 @@ OrlGameLog17 <- OrlGameLog17[-21:-22,] #remove non-game stats
 OrlGameLog17 <- OrlGameLog17[-41:-42,] #remove non-game stats 
 OrlGameLog17 <- OrlGameLog17[-61:-62,] #remove non-game stats 
 
-##### Import Table 6, Game Log for Orlando Magic 2015-2016 #####
+##### Import Table, Game Log for Orlando Magic 2015-2016 #####
 BrOrl16GameLog <- "https://www.basketball-reference.com/teams/ORL/2016/gamelog/"
 read_html(BrOrl16GameLog)
 
@@ -122,7 +104,7 @@ OrlGameLog16 <- OrlGameLog16[-21:-22,] #remove non-game stats
 OrlGameLog16 <- OrlGameLog16[-41:-42,] #remove non-game stats 
 OrlGameLog16 <- OrlGameLog16[-61:-62,] #remove non-game stats 
 
-##### Import Table 7, Game Log for Orlando Magic 2014-2015 #####
+##### Import Table, Game Log for Orlando Magic 2014-2015 #####
 BrOrl15GameLog <- "https://www.basketball-reference.com/teams/ORL/2015/gamelog/"
 read_html(BrOrl15GameLog)
 
@@ -142,7 +124,7 @@ OrlGameLog15 <- OrlGameLog15[-21:-22,] #remove non-game stats
 OrlGameLog15 <- OrlGameLog15[-41:-42,] #remove non-game stats 
 OrlGameLog15 <- OrlGameLog15[-61:-62,] #remove non-game stats 
 
-##### Import Table 8, Game Log for Orlando Magic 2013-2014 #####
+##### Import Table, Game Log for Orlando Magic 2013-2014 #####
 BrOrl14GameLog <- "https://www.basketball-reference.com/teams/ORL/2014/gamelog/"
 read_html(BrOrl14GameLog)
 
@@ -162,7 +144,7 @@ OrlGameLog14 <- OrlGameLog14[-21:-22,] #remove non-game stats
 OrlGameLog14 <- OrlGameLog14[-41:-42,] #remove non-game stats 
 OrlGameLog14 <- OrlGameLog14[-61:-62,] #remove non-game stats 
 
-##### Import Table 9, Game Log for Orlando Magic 2012-2013 #####
+##### Import Table, Game Log for Orlando Magic 2012-2013 #####
 BrOrl13GameLog <- "https://www.basketball-reference.com/teams/ORL/2013/gamelog/"
 read_html(BrOrl13GameLog)
 
@@ -182,7 +164,7 @@ OrlGameLog13 <- OrlGameLog13[-21:-22,] #remove non-game stats
 OrlGameLog13 <- OrlGameLog13[-41:-42,] #remove non-game stats 
 OrlGameLog13 <- OrlGameLog13[-61:-62,] #remove non-game stats 
 
-##### Import Table 10, Game Log for Orlando Magic 2011-2012 #####
+##### Import Table, Game Log for Orlando Magic 2011-2012 #####
 BrOrl12GameLog <- "https://www.basketball-reference.com/teams/ORL/2012/gamelog/"
 read_html(BrOrl12GameLog)
 
@@ -202,7 +184,7 @@ OrlGameLog12 <- OrlGameLog12[-21:-22,] #remove non-game stats
 OrlGameLog12 <- OrlGameLog12[-41:-42,] #remove non-game stats 
 OrlGameLog12 <- OrlGameLog12[-61:-62,] #remove non-game stats 
 
-##### Import Table 11, Game Log for Orlando Magic 2010-2011 #####
+##### Import Table, Game Log for Orlando Magic 2010-2011 #####
 BrOrl11GameLog <- "https://www.basketball-reference.com/teams/ORL/2011/gamelog/"
 read_html(BrOrl11GameLog)
 
@@ -222,7 +204,7 @@ OrlGameLog11 <- OrlGameLog11[-21:-22,] #remove non-game stats
 OrlGameLog11 <- OrlGameLog11[-41:-42,] #remove non-game stats 
 OrlGameLog11 <- OrlGameLog11[-61:-62,] #remove non-game stats 
 
-##### Import Table 12, Game Log for Orlando Magic 2009-2010 #####
+##### Import Table, Game Log for Orlando Magic 2009-2010 #####
 BrOrl10GameLog <- "https://www.basketball-reference.com/teams/ORL/2010/gamelog/"
 read_html(BrOrl10GameLog)
 
@@ -237,15 +219,109 @@ pageobj %>%
 #Update Column labels 
 coltitle <- as.character(OrlGameLog10[1,]) # read the column names from row 1
 colnames(OrlGameLog10) <- coltitle # add the column names to x
-OrlGameLog10 <- OrlGameLog10[-1,] # remove the first row and the 1st column of the data
+OrlGameLog10 <- OrlGameLog10[-1,] # remove the first row 
 OrlGameLog10 <- OrlGameLog10[-21:-22,] #remove non-game stats 
 OrlGameLog10 <- OrlGameLog10[-41:-42,] #remove non-game stats 
 OrlGameLog10 <- OrlGameLog10[-61:-62,] #remove non-game stats 
 
 OrlGameLog <- rbind(OrlGameLog10, OrlGameLog11, OrlGameLog12, OrlGameLog13, OrlGameLog14, 
                     OrlGameLog15, OrlGameLog16, OrlGameLog17, OrlGameLog18, OrlGameLog19, 
-                    OrlGameLog20, OrlGameLog21)
+                    OrlGameLog20)
+
+##### Create Data Dictionary ##### 
+#Create a vector that counts how many columns are in the data frame
+ColNumber <- (seq_len(ncol(OrlGameLog)))
+#Turn the vector into its own data frame with the first column called ColNumber 
+DataDictionary <- as.data.frame(ColNumber)
+#Add a column based on the vector of colnames 
+DataDictionary$VariableName <- (colnames(OrlGameLog))
+#Add the variable type into the data frame as a new column called "type"
+DataDictionary$DataType <- (sapply(OrlGameLog, class))
+View(DataDictionary) 
+
+##### Clean the OrlGameLog Data Frame based on insights from the Data Dictionary #####
+
+#Removes Rows with subheadings
+OrlGameLog <- OrlGameLog[!(OrlGameLog$Rk=="Rk"),]
+OrlGameLog <- OrlGameLog[!(OrlGameLog$FG=="Team"),]
+
+#Update the Game Rank to reflect all seasons
+OrlGameLog$Rk <- seq.int(nrow(OrlGameLog))
+
+#Change Column Names
+names(OrlGameLog)[names(OrlGameLog) == "Rk"] <- "GameRank"
+names(OrlGameLog)[names(OrlGameLog) == "G"] <- "SeasonGame"
+colnames(OrlGameLog)[4] <-c("Location") 
+colnames(housing.df)[5] <-c("Opponent") 
+names(OrlGameLog)[names(OrlGameLog) == "W/L"] <- "WinLoss"
+names(OrlGameLog)[names(OrlGameLog) == "Tm"] <- "MagicPoints"
+#Multiple columns had the same name, requiring us to indicate column position
+colnames(OrlGameLog)[8] <-c("OppPoints") 
+colnames(OrlGameLog)[9] <-c("MagicFG") 
+colnames(OrlGameLog)[10] <-c("MagicFGA") 
+colnames(OrlGameLog)[11] <-c("MagicFG%") 
+colnames(OrlGameLog)[12] <-c("Magic3P") 
+colnames(OrlGameLog)[13] <-c("Magic3PA") 
+colnames(OrlGameLog)[14] <-c("Magic3P%") 
+colnames(OrlGameLog)[15] <-c("MagicFT") 
+colnames(OrlGameLog)[16] <-c("MagicFTA") 
+colnames(OrlGameLog)[17] <-c("MagicFT%") 
+colnames(OrlGameLog)[18] <-c("MagicOffensiveRebounds") 
+colnames(OrlGameLog)[19] <-c("MagicTotalRebounds") 
+colnames(OrlGameLog)[20] <-c("MagicAssists") 
+colnames(OrlGameLog)[21] <-c("MagicSteals") 
+colnames(OrlGameLog)[22] <-c("MagicBlocks") 
+colnames(OrlGameLog)[23] <-c("MagicTurnovers") 
+colnames(OrlGameLog)[24] <-c("MagicPersonalFouls") 
+#column 25 will be removed
+colnames(OrlGameLog)[26] <-c("OppFG") 
+colnames(OrlGameLog)[27] <-c("OppFGA") 
+colnames(OrlGameLog)[28] <-c("OppFG%") 
+colnames(OrlGameLog)[29] <-c("Opp3P") 
+colnames(OrlGameLog)[30] <-c("Opp3PA") 
+colnames(OrlGameLog)[31] <-c("Opp3P%") 
+colnames(OrlGameLog)[32] <-c("OppFT") 
+colnames(OrlGameLog)[33] <-c("OppFTA") 
+colnames(OrlGameLog)[34] <-c("OppFT%") 
+colnames(OrlGameLog)[35] <-c("OppOffensiveRebounds") 
+colnames(OrlGameLog)[36] <-c("OppTotalRebounds") 
+colnames(OrlGameLog)[37] <-c("OppAssists") 
+colnames(OrlGameLog)[38] <-c("OppSteals") 
+colnames(OrlGameLog)[39] <-c("OppBlocks") 
+colnames(OrlGameLog)[40] <-c("OppTurnovers") 
+colnames(OrlGameLog)[41] <-c("OppPersonalFouls") 
+
+#Remove Null Column 
+OrlGameLog <- OrlGameLog[,-25] # remove NA column
+
+#Fill in the Location Data for the game
+OrlGameLog$Location <- ifelse(OrlGameLog$Location == "@", "Away", "Home") 
+
+#Update Data Type
+colnames(OrlGameLog) #lists column names for easy copying and pasting into code
+
+library(hablar)
+OrlGameLog <- OrlGameLog %>% convert(
+  int(GameRank, SeasonGame, MagicPoints, OppPoints, MagicFG, MagicFGA, 
+      Magic3P, Magic3PA, MagicFT, MagicFTA, MagicOffensiveRebounds, 
+      MagicTotalRebounds, MagicAssists, MagicSteals, MagicBlocks, MagicTurnovers, MagicPersonalFouls,
+      OppFG, OppFGA, OppFT, OppFGA, Opp3P, Opp3PA, OppOffensiveRebounds, 
+      OppTotalRebounds, OppAssists, OppSteals, OppBlocks, OppTurnovers, OppPersonalFouls), 
+  num("MagicFG%", "Magic3P%", "MagicFT%", "OppFG%", "OppFT%", "Opp3P%"),
+  dte("Date"),
+  fct("Location", "Opp", "WinLoss"))
+
+#Add a column for notes 
+OrlGameLog$Notes <- NA
+
+#Update Data Dictionary 
+ColNumber <- (seq_len(ncol(OrlGameLog)))
+DataDictionary <- as.data.frame(ColNumber)
+DataDictionary$VariableName <- (colnames(OrlGameLog))
+DataDictionary$DataType <- (sapply(OrlGameLog, class))
+View(DataDictionary) 
 
 ##### Export Data Table as Excel Saved on Local Drive ##### 
-setwd("/Users/UserName/Documents/Folder/Subfolder")
-openxlsx::write.xlsx(OrlGameLog, file = "OrlGameLog.xlsx")
+setwd("/Users/Username/Documents/folder/subfolder")
+openxlsx::write.xlsx(OrlGameLog, file = "1.5.20_OrlGameLog.xlsx")
+openxlsx::write.xlsx(DataDictionary, file = "1.5.20_OrlGameLog_DD.xlsx")

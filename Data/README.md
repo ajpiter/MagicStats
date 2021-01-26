@@ -20,6 +20,8 @@ The Magic are great, and while these datasets are about them the main purpose of
   - Replace data in column using if statement 
   - Split Columns 
   - Update data types using hablar package 
-- **Data Dictionary:**
 - **Export Data:** To Excel saved on local drive 
 
+#### Game Logs (R)
+- **Column Names:** Multiple columns of data had the same name, used the column index method to update the column names 
+- **Data Cleaning:** Data was cleaned after merging the indivdual tables together 

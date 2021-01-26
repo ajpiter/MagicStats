@@ -4,7 +4,7 @@ The Magic are great, and while these datasets are about them the main purpose of
 
 ### Methods of Data Wrangling
 
-#### Anthony (R) 
+#### Anthony & Bone (R) 
 - **Web Scrapping:** rvest package 1 page from Basketball Reference
 - **Data Cleaning:** 
   - Remove Columns and Rows

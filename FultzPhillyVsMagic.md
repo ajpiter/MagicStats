@@ -1,62 +1,95 @@
 #Stats were pulled from Basketball Reference.com 
 
+## Magic vs. Philly: Comparing Fultz using Game Score
+
 ![image](https://user-images.githubusercontent.com/28680575/104147408-2541b980-539c-11eb-9fe9-5fb24e6d7ce0.png)
 
+### Import Packages 
+
 library(rvest) #version 0.3.6 
+
 library(dplyr)
+
 library(hablar) #Used to convert data types
+
 library(ggplot2) #graphing 
+
 library(stringr) #spliting columns 
 
------ #Fultz Stats ----- 
-# Fultz 2020 - 2021 
+## Import Data: Fultz Stats 
+
+### Fultz 2020 - 2021 Season 
+
 Fultz2021 <- "https://www.basketball-reference.com/players/f/fultzma01/gamelog/2021/"
+
 read_html(Fultz2021)
 
-## After importing the html site, transform to data table
+##### #After importing the html site, transform to data table
+
 url <- Fultz2021
+
 pageobj <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
+
 #Here, we indicate that this is the table we want to extract.
+
 pageobj %>%  
   html_nodes("table") %>% 
   .[[8]] %>% 
   html_table(fill=T) -> Fultz2021
 
-## Removes Rows with subheadings
+##### #Removes Rows with subheadings
 Fultz2021 <- Fultz2021[!(Fultz2021$GS=="Did Not Play" | 
                            Fultz2021$GS=="Did Not Dress" | 
                            Fultz2021$GS=="GS" | 
                            Fultz2021$GS == "Inactive"),]
 
-## Change Column Names
+##### #Change Column Names
+
 names(Fultz2021)[names(Fultz2021) == "Rk"] <- "TeamGame"
+
 names(Fultz2021)[names(Fultz2021) == "G"] <- "PlayerGame"
+
 names(Fultz2021)[names(Fultz2021) == "Tm"] <- "Team"
+
 colnames(Fultz2021)[6] <-c("Location")
+
 names(Fultz2021)[names(Fultz2021) == "Opp"] <- "Opponent"
+
 colnames(Fultz2021)[8] <-c("WinLoss") 
+
 names(Fultz2021)[names(Fultz2021) == "GS"] <- "GameStarted"
+
 names(Fultz2021)[names(Fultz2021) == "MP"] <- "MinsPlayed"
 
-## Fill in the Location Data for the game
+##### Fill in the Location Data for the game
 Fultz2021$Location <- ifelse(Fultz2021$Location == "@", "Away", "Home") 
 
-## Split MinsPlayed Column into two columns 
+##### Split MinsPlayed Column into two columns 
+
 Index <- str_split_fixed(Fultz2021$MinsPlayed, ":", 2) #Create County Index Matrix
+
 Fultz2021 <- cbind(Fultz2021, Index) #Add CountyIndex Matrix to CountyIncome DataFrame
+
 names(Fultz2021)[names(Fultz2021) == "1"] <- "Minutes" 
+
 names(Fultz2021)[names(Fultz2021) == "2"] <- "Seconds" 
 
-## Split WinsLoss Column into two columns 
+##### Split WinsLoss Column into two columns 
 Index <- str_split_fixed(Fultz2021$WinLoss, " ", 2) #Create County Index Matrix
+
 Fultz2021 <- cbind(Fultz2021, Index) #Add CountyIndex Matrix to CountyIncome DataFrame
+
 Fultz2021<- Fultz2021 %>% select(-WinLoss) #remove columns
+
 names(Fultz2021)[names(Fultz2021) == "1"] <- "WinLoss" 
+
 Fultz2021<- Fultz2021 %>% select(-"2")
 
-## Update the Data Types 
-## library(hablar)
+##### Update the Data Types 
+##### library(hablar)
+
 colnames(Fultz2021)
+
 Fultz2021 <- Fultz2021 %>% convert(
   int("TeamGame", "PlayerGame", "FG", "FGA", "3P", "3PA", "FT", "FTA", "ORB", 
       "DRB", "TRB", "AST", "STL", "BLK", "TOV", "PF", "PTS", "+/-" ), 
@@ -64,7 +97,8 @@ Fultz2021 <- Fultz2021 %>% convert(
   dte("Date"),
   fct("Team", "Location", "Opponent", "WinLoss", "GameStarted"))
 
-##### Create Data Dictionary ##### 
+##### Create Data Dictionary: Fultz 2021 Season 
+
 #Create a vector that counts how many columns are in the data frame
 ColNumber <- (seq_len(ncol(Fultz2021)))
 #Turn the vector into its own data frame with the first column called ColNumber 
@@ -75,6 +109,8 @@ DataDictionary$VariableName <- (colnames(Fultz2021))
 DataDictionary$DataType <- (sapply(Fultz2021, class))
 View(DataDictionary)
 
+##### Graph: Fultz 2021 Season 
+
 ggplot(Fultz2021, aes(x = Minutes, y = GmSc)) + 
   geom_point() +
   ggtitle("Fultz 2020-2021") + 
@@ -83,42 +119,61 @@ ggplot(Fultz2021, aes(x = Minutes, y = GmSc)) +
   theme_classic() + 
   theme(axis.text.x = element_blank(), axis.ticks = element_blank(), axis.line = element_line(linetype = "blank"))
 
-# Fultz 2019-2020 Season  
+### Fultz 2019-2020 Season  
+
 Fultz2020 <- "https://www.basketball-reference.com/players/f/fultzma01/gamelog/2020"
+
 read_html(Fultz2020)
 
-## After importing the html site, transform to data table
+##### After importing the html site, transform to data table
+
 url <- Fultz2020
+
 pageobj <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
-#Here, we indicate that this is the table we want to extract.
+
+##### Here, we indicate that this is the table we want to extract.
+
 pageobj %>%  
   html_nodes("table") %>% 
   .[[8]] %>% 
   html_table(fill=T) -> Fultz2020
 
-## Removes Rows with subheadings
+##### Removes Rows with subheadings
+
 Fultz2020 <- Fultz2020[!(Fultz2020$GS=="Did Not Play" | 
                            Fultz2020$GS=="Did Not Dress" | 
                            Fultz2020$GS=="GS" | 
                            Fultz2020$GS == "Inactive"),]
 
-## Change Column Names
+##### Change Column Names
+
 names(Fultz2020)[names(Fultz2020) == "Rk"] <- "TeamGame"
+
 names(Fultz2020)[names(Fultz2020) == "G"] <- "PlayerGame"
+
 names(Fultz2020)[names(Fultz2020) == "Tm"] <- "Team"
+
 colnames(Fultz2020)[6] <-c("Location")
+
 names(Fultz2020)[names(Fultz2020) == "Opp"] <- "Opponent"
+
 colnames(Fultz2020)[8] <-c("WinLoss") 
+
 names(Fultz2020)[names(Fultz2020) == "GS"] <- "GameStarted"
+
 names(Fultz2020)[names(Fultz2020) == "MP"] <- "MinsPlayed"
 
-## Fill in the Location Data for the game
+##### Fill in the Location Data for the game
 Fultz2020$Location <- ifelse(Fultz2020$Location == "@", "Away", "Home") 
 
-## Split MinsPlayed Column into two columns 
+##### Split MinsPlayed Column into two columns 
+
 Index <- str_split_fixed(Fultz2020$MinsPlayed, ":", 2) #Create County Index Matrix
+
 Fultz2020 <- cbind(Fultz2020, Index) #Add CountyIndex Matrix to CountyIncome DataFrame
+
 names(Fultz2020)[names(Fultz2020) == "1"] <- "Minutes" 
+
 names(Fultz2020)[names(Fultz2020) == "2"] <- "Seconds" 
 
 ## Split WinsLoss Column into two columns 

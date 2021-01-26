@@ -151,7 +151,7 @@ ggplot(Bone, aes(x = PlayerGame, y = GmSc, color = Team)) +
 
 ##### Export Data Table as Excel Saved on Local Drive ##### 
 getwd()
-setwd("/Users/amandapiter/Documents/Projects")
+setwd("/Users/computername/Documents/MagicStats")
 openxlsx::write.xlsx(Bone, file = "1.11.20 Bone Stats.xlsx")
 openxlsx::write.xlsx(Bone2020, file = "1.11.20 Bone 2020 Stats.xlsx")
 openxlsx::write.xlsx(Bone2021, file = "1.11.20 Bone 2021 Stats.xlsx")

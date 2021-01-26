@@ -5,8 +5,7 @@ The Magic are great, and while these datasets are about them the main purpose of
 ### Methods of Data Wrangling
 
 #### Anthony (R) 
-- **Data Source:** 1 webpage from Basketball Reference 
-- **Web Scrapping:** rvest package
+- **Web Scrapping:** rvest package 1 page from Basketball Reference
 - **Data Cleaning:** 
   - Remove Columns and Rows
   - Replace data in column using if statement 
@@ -15,14 +14,12 @@ The Magic are great, and while these datasets are about them the main purpose of
 - **Data Dictionary:**
 
 #### Fultz (R) 
-- **Data Source:** 3 webpages from Basketball Reference 
-- **Web Scrapping:** rvest package
+- **Web Scrapping:** rvest package, and rbind() to merge 3 webpages from Basketball Reference 
 - **Data Cleaning:** 
   - Remove Columns and Rows
   - Replace data in column using if statement 
   - Split Columns 
   - Update data types using hablar package 
 - **Data Dictionary:**
-- **rbind()** 
 - **Export Data:** To Excel saved on local drive 
 

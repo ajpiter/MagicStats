@@ -5,7 +5,7 @@ Basketball statistics have numerous publically available datasets. I will be uti
 **Projects:**
 - **Fultz Magic v Philly:** A single graphic showing the change in Fultz's Game Score over time both with Philly and the Orlando Magic. Pulled before his 2021 injury. 
 - **Is Our Rookie Better Than Your Rookie?:** Compares the Magic's Cole Anthony against other members of the 2021 NBA rookie class through numerous ggplot graphs after scrapping and cleaning datasets. 
-- **Should the Magic Sign a Point Guard?:** First created immediately following Fultz's injury and before Cole Anthony became the Magic's starting Point Guard. Highlights the Magic's current roster of guard replacements using the facet wrap feature in ggplot2.  
+- **Should the Magic Sign a Point Guard?:** First created immediately following Fultz's injury and before Cole Anthony became the Magic's starting Point Guard. Highlights the Magic's roster of guard replacements using the facet wrap feature in ggplot2.  
 
 **Datasets Utilized:**
 * Baksetball Reference Orlando Magic Game Log: https://www.basketball-reference.com/teams/ORL/2010/gamelog/

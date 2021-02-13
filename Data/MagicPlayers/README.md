@@ -10,3 +10,4 @@ Data was obtained from Basketball-Reference.com for each of the Orlando Magic pl
 - **Vucevic:** R multiple datasets merged with rbind() and then cleaned 
 
 ### In Python 
+- **Okeke:** Using BeautifulSoup and creating headers list by hand 
